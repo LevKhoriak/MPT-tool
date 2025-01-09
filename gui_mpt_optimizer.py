@@ -45,6 +45,7 @@ if uploaded_files is not None:
                 f'Make sure that the headers and delimiters are in the correct format.'
                 )
 
+# If there are no common dates for all the assets
 if begindate > enddate - pd.Timedelta(days=10):
     st.error('No common timeframe could be chosen.')
 
@@ -52,7 +53,7 @@ if len(uploaded_files) > 1 and begindate <= enddate - pd.Timedelta(days=10):
     st.write('# Construct the portfolio')
     d = st.date_input(
         label='Portfolio construction date',
-        value=begindate + pd.Timedelta(days=10),
+        # Add beginning date + 10 days, because of rolling covariance of 10 days
         min_value=begindate + pd.Timedelta(days=10),
         max_value=enddate
         )
